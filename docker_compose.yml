@@ -4,8 +4,10 @@ services:
 
   # The News Plattform
   news-platform:
-    image: vanalmsick/news_platform
-    container_name: news-platform
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-news-platform
     restart: always
     ports:
       - 9380:80    # for gui/website
@@ -17,6 +19,7 @@ services:
       - news-platform-letsencrypt
     volumes:
       - /c/Users/liamx/Code/Stanford/OVAL/multinews/np_data:/news_platform/data
+      # - /c/Users/liamx/Code/Stanford/OVAL/multinews/np_docker:/news_platform
     environment:
       MAIN_HOST: 'https://news.yourwebsite.com'
       HOSTS: 'http://localhost,http://127.0.0.1,http://0.0.0.0,http://docker-container-name,http://news.yourwebsite.com,https://news.yourwebsite.com'
