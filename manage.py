@@ -81,10 +81,13 @@ if __name__ == "__main__":
         from feeds.models import Feed
 
         # Load initial feeds
+        print(f'\n\n\n\n\n***************************\n\len(Feed.objects.all()): {len(Feed.objects.all())}\n\n\n\n\n')
+
         if len(Feed.objects.all()) == 0:
             print("Add default data")
             sys.argv = [INITIAL_ARGV[0], "add_default_data"]
             main()
+            print('\n\n\n\n\n***************************\n\nLoaded default data\n\n\n\n\n')
 
         # Create Admin
         if len(User.objects.filter(username="admin")) == 0:

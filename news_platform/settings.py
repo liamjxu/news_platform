@@ -38,7 +38,7 @@ TESTING = os.environ.get("TESTING", "false").lower() == "true"
 CELERY_TASK_ALWAYS_EAGER = (
     False  # true to run tasks synchronously for testing and development
 )
-print(f'Debug modus is turned {"on" if DEBUG else "off"}')
+print(f'Yes xjl Debug modus is turned {"on" if DEBUG else "off"}. ')
 
 MAIN_HOST = os.environ.get("MAIN_HOST", "http://localhost")
 HOSTS = os.environ.get("HOSTS", "http://localhost,http://127.0.0.1/").split(",")
