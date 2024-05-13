@@ -38,7 +38,7 @@ TESTING = os.environ.get("TESTING", "false").lower() == "true"
 CELERY_TASK_ALWAYS_EAGER = (
     False  # true to run tasks synchronously for testing and development
 )
-print(f'[latest changed 0506] Yes xjl Debug modus is turned {"on" if DEBUG else "off"}. ')
+print(f'[latest changed 0512] Yes xjl Debug modus is turned {"on" if DEBUG else "off"}. ')
 
 MAIN_HOST = os.environ.get("MAIN_HOST", "http://localhost")
 HOSTS = os.environ.get("HOSTS", "http://localhost,http://127.0.0.1/").split(",")
@@ -226,7 +226,7 @@ ALLOWED_LANGUAGES = os.getenv("ALLOWED_LANGUAGES", "*")
 LOGOUT_REDIRECT_URL = "/"
 SIDEBAR_TITLE = os.getenv("SIDEBAR_TITLE", "Latest News")
 
-TIME_ZONE = CELERY_TIMEZONE = os.getenv("TIME_ZONE", "Europe/London")
+TIME_ZONE = CELERY_TIMEZONE = os.getenv("TIME_ZONE", "America/Los_Angeles")
 TIME_ZONE_OBJ = pytz.timezone(TIME_ZONE)
 
 USE_I18N = True

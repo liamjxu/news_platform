@@ -212,11 +212,14 @@ def calcualte_relevance(publisher, feed, feed_position, hash, pub_date, article_
 
     # age factor
     if feed.feed_type != "rss":  # videos
-        factor_age = 10 / (1 + math.exp(-0.01 * article_age + 4)) + 1
+        # factor_age = 10 / (1 + math.exp(-0.01 * article_age + 4)) + 1
+        factor_age = 1
     elif feed__ordering == "r":
-        factor_age = 3 / (1 + math.exp(-0.25 * article_age + 4)) + 1
+        # factor_age = 3 / (1 + math.exp(-0.25 * article_age + 4)) + 1
+        factor_age = 1
     else:  # d
-        factor_age = 4 / (1 + math.exp(-0.25 * article_age + 4)) + 1
+        # factor_age = 4 / (1 + math.exp(-0.25 * article_age + 4)) + 1
+        factor_age = 1
 
     article_relevance = round(
         factor_publisher__renowned
@@ -345,14 +348,16 @@ def fetch_feed_new(feed):
     added_articles = 0
 
     feed_url = feed.url
+    print('\n\n***xjl***\n', 'feedurl:', feed_url)
     if "http://FEED-CREATOR.local" in feed_url:
         feed_url = feed_url.replace(
             "http://FEED-CREATOR.local", settings.FEED_CREATOR_URL
         )
     if "http://FULL-TEXT.local" in feed_url:
         feed_url = feed_url.replace("http://FULL-TEXT.local", settings.FULL_TEXT_URL)
-
+    print('\n\n***xjl***\n', 'new feedurl:', feed_url)
     fetched_feed = feedparser.parse(feed_url)
+    print('\n\n***xjl***\n', 'fetched_feed.entries has:', len(fetched_feed.entries))
     if hasattr(fetched_feed.feed, "updated_parsed"):
         fetched_feed__last_updated = datetime.datetime.fromtimestamp(
             time.mktime(fetched_feed.feed.updated_parsed)
@@ -682,6 +687,13 @@ class ScrapedArticle:
             ]
             if len(tmp) > 0:
                 self.feed_article_image_url = tmp[0]
+        if hasattr(self.feed_article_obj, "links"):
+            tmp = []
+            for link in self.feed_article_obj.links:
+                if "image" in link["type"]:
+                    tmp.append(link["href"])
+            if len(tmp) > 0:
+                self.feed_article_image_url = tmp[0]
 
         # special logic for "tags"/"categories" attribute
         if hasattr(self.feed_article_obj, "tags"):
@@ -796,7 +808,8 @@ class ScrapedArticle:
             try:
                 full_text_data = response.json()
 
-                for attr in ["title", "og_title", "twitter_title"]:
+                # for attr in ["title", "og_title", "twitter_title"]:
+                for attr in ["og_title", "twitter_title"]:
                     if (
                         attr in full_text_data
                         and full_text_data[attr] is not None
@@ -814,7 +827,8 @@ class ScrapedArticle:
                         self.scrape_article_image_url = full_text_data[attr]
                         break
 
-                for attr in ["og_description", "twitter_description", "excerpt"]:
+                # for attr in ["og_description", "twitter_description", "excerpt"]:
+                for attr in ["og_description", "twitter_description"]:
                     if (
                         attr in full_text_data
                         and full_text_data[attr] is not None

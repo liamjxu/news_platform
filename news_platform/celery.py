@@ -22,12 +22,12 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "daytime": {
         "task": "news_platform.pages.pageHome.refresh_feeds",
-        "schedule": crontab(minute="*/15", hour="5-18"),
+        "schedule": crontab(minute="*/5", hour="0-18"),
         "args": (),
     },
     "nighttime": {
         "task": "news_platform.pages.pageHome.refresh_feeds",
-        "schedule": crontab(minute="*/30", hour="18-23"),
+        "schedule": crontab(minute="*/5", hour="18-23"),
         "args": (),
     },
 }
